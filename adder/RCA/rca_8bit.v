@@ -3,9 +3,9 @@
 // Company: 
 // Engineer: 
 // 
-// Create Date: 03.06.2025 20:46:22
+// Create Date: 05.06.2025 18:59:25
 // Design Name: 
-// Module Name: half_adder_beh
+// Module Name: rca_8bit
 // Project Name: 
 // Target Devices: 
 // Tool Versions: 
@@ -20,23 +20,18 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module half_adder_beh(
-    input x, y,
-    output reg s, c
+module rca_8bit(
+    input [7:0] x, y,
+    input cin,
+    output [7:0] s,
+    output cout
     );
     
-    always @(x, y)
-    begin
-    // Sum
-        s = x ^ y;
-     // Carry
-        if (x & y)
-        begin
-            c = 1'b1;
-        end 
-        else
-        begin
-            c = 1'b0;
-        end
-    end
+    rca_nbits #(.n(8)) adder_8(
+        .x(x),
+        .y(y),
+        .cin(cin),
+        .s(s),
+        .cout(cout)
+    );
 endmodule

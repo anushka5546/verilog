@@ -3,9 +3,9 @@
 // Company: 
 // Engineer: 
 // 
-// Create Date: 03.06.2025 20:46:22
+// Create Date: 14.06.2025 20:38:53
 // Design Name: 
-// Module Name: half_adder_beh
+// Module Name: priority_encoder
 // Project Name: 
 // Target Devices: 
 // Tool Versions: 
@@ -20,23 +20,27 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module half_adder_beh(
-    input x, y,
-    output reg s, c
+module priority_encoder_4x2(
+    input [3:0] i,
+    output v,
+    //input en,
+    output reg [1:0] y
     );
     
-    always @(x, y)
+    assign v = |i;
+    always @(i)
     begin
-    // Sum
-        s = x ^ y;
-     // Carry
-        if (x & y)
-        begin
-            c = 1'b1;
-        end 
+        y = 2'bxx;
+        
+        if (i[3])
+            y = 2'b11;
+        else if(i[2])
+            y = 2'b10;
+        else if (i[1])
+            y = 2'b01;
+        else if (i[0])
+            y = 2'b00;
         else
-        begin
-            c = 1'b0;
-        end
+            y = 2'bxx;
     end
 endmodule

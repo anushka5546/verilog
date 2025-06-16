@@ -3,9 +3,9 @@
 // Company: 
 // Engineer: 
 // 
-// Create Date: 03.06.2025 20:46:22
+// Create Date: 13.06.2025 19:23:14
 // Design Name: 
-// Module Name: half_adder_beh
+// Module Name: demux_1xN
 // Project Name: 
 // Target Devices: 
 // Tool Versions: 
@@ -20,23 +20,22 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module half_adder_beh(
-    input x, y,
-    output reg s, c
+module demux_1xN                // n select line
+    #(parameter n = 3)
+    (
+    input f, en,
+    input [n - 1:0] s,
+    output reg [2 ** n - 1:0] y
     );
     
-    always @(x, y)
+    always @(f, en, s)
     begin
-    // Sum
-        s = x ^ y;
-     // Carry
-        if (x & y)
+        y = 'b0;               // Default value
+        if (en)
         begin
-            c = 1'b1;
-        end 
-        else
-        begin
-            c = 1'b0;
+            y[s] = f;
         end
+        else
+            y = 'b0;
     end
 endmodule

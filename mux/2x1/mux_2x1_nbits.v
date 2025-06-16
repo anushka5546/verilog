@@ -3,9 +3,9 @@
 // Company: 
 // Engineer: 
 // 
-// Create Date: 03.06.2025 20:46:22
+// Create Date: 09.06.2025 13:46:20
 // Design Name: 
-// Module Name: half_adder_beh
+// Module Name: mux_2x1_nbits
 // Project Name: 
 // Target Devices: 
 // Tool Versions: 
@@ -20,23 +20,18 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module half_adder_beh(
-    input x, y,
-    output reg s, c
+module mux_2x1_nbits
+    #(parameter n = 3)
+    (
+    input [n - 1:0] w0, w1,
+    input s,
+    output reg [n - 1:0] f
     );
     
-    always @(x, y)
+//  assign f = s?w1:w0;           // dataflow modelling
+    
+    always @(s, w0, w1)
     begin
-    // Sum
-        s = x ^ y;
-     // Carry
-        if (x & y)
-        begin
-            c = 1'b1;
-        end 
-        else
-        begin
-            c = 1'b0;
-        end
+        f = s?w1:w0;              // procedural assignment
     end
 endmodule

@@ -3,9 +3,9 @@
 // Company: 
 // Engineer: 
 // 
-// Create Date: 03.06.2025 20:46:22
+// Create Date: 09.06.2025 14:02:01
 // Design Name: 
-// Module Name: half_adder_beh
+// Module Name: mux_generic_1bit
 // Project Name: 
 // Target Devices: 
 // Tool Versions: 
@@ -20,23 +20,20 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module half_adder_beh(
-    input x, y,
-    output reg s, c
+module mux_generic_1bit
+    #(parameter INS = 5)
+    (
+    input [INS - 1:0] w,                      
+    input [$clog2(INS) - 1:0] s,               
+    output reg f                                      
     );
-    
-    always @(x, y)
+
+    integer k;
+    always @(*) 
     begin
-    // Sum
-        s = x ^ y;
-     // Carry
-        if (x & y)
-        begin
-            c = 1'b1;
-        end 
-        else
-        begin
-            c = 1'b0;
-        end
+        f = 'bx; 
+        for (k = 0; k < INS; k = k + 1)
+            if (k == s)
+                f = w[k];
     end
 endmodule

@@ -3,9 +3,9 @@
 // Company: 
 // Engineer: 
 // 
-// Create Date: 03.06.2025 20:46:22
+// Create Date: 10.06.2025 19:30:46
 // Design Name: 
-// Module Name: half_adder_beh
+// Module Name: encoder_8x3
 // Project Name: 
 // Target Devices: 
 // Tool Versions: 
@@ -20,23 +20,26 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module half_adder_beh(
-    input x, y,
-    output reg s, c
+module encoder_8x3(
+    input [7:0] i,
+    input en,
+    output [2:0] y
     );
     
-    always @(x, y)
-    begin
-    // Sum
-        s = x ^ y;
-     // Carry
-        if (x & y)
+    wire [3:0] a;
+    generate
+        genvar k;
+        for(k = 0; k <= 3 ; k = k + 1)
         begin
-            c = 1'b1;
-        end 
-        else
-        begin
-            c = 1'b0;
+            assign a[k] = i[k] | i[k + 4];
         end
-    end
+    endgenerate 
+    
+    encoder_4x2 EN0 (
+        .i(a),
+        .en(en),
+        .y(y[1:0])
+    );
+    
+    assign y[2] = |i[7:4] & en;
 endmodule

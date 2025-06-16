@@ -3,9 +3,9 @@
 // Company: 
 // Engineer: 
 // 
-// Create Date: 03.06.2025 20:46:22
+// Create Date: 05.06.2025 02:43:17
 // Design Name: 
-// Module Name: half_adder_beh
+// Module Name: decoder_2x4_df
 // Project Name: 
 // Target Devices: 
 // Tool Versions: 
@@ -20,23 +20,13 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module half_adder_beh(
-    input x, y,
-    output reg s, c
+module decoder_2x4_df(
+    input a, b, e,
+    output q0, q1, q2, q3
     );
     
-    always @(x, y)
-    begin
-    // Sum
-        s = x ^ y;
-     // Carry
-        if (x & y)
-        begin
-            c = 1'b1;
-        end 
-        else
-        begin
-            c = 1'b0;
-        end
-    end
+    assign q0 = ~a & ~b & e;
+    assign q1 = ~a & b & e;
+    assign q2 = a & ~b & e;
+    assign q3 = a & b & e;
 endmodule
